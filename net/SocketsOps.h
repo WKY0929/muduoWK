@@ -11,6 +11,7 @@ namespace sockets
 {
     int connet(int sockfd,const struct sockaddr* addr);
     int accept(int sockfd,const struct sockaddr* addr);
+    void close(int sockfd);
 }//namespace sockets
     
 } // namespace net
