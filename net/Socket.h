@@ -43,15 +43,18 @@ public:
         socklen_t len=sizeof(client);
         int cfd=accept(sockfd_,(struct sockaddr*)&client,&len);
         printf("new client is coming\n");
+        char ip[16]="";
+        inet_ntop(AF_INET,&client.sin_addr.s_addr,ip,16);
+        printf("ip address:%s,ip port:%d\n",ip,ntohs(client.sin_port));
         write(cfd,"welcome connect to our server",30);
-        sockwrite(cfd);
+        sockchat(cfd);
     }
     int SetNonBlock(int fd);
     ~Socket()
     {
         close(sockfd_);
     }
-    void sockwrite(int fd)
+    void sockchat(int fd)
     {
         pid_t pid=fork();
         if(0==pid)
@@ -75,6 +78,7 @@ public:
         }
 
     }
+
     // int createNonBlockSocket(sa_family_t family);
     // int connect(int socket,const struct sockaddr* addr);
     // void close(int sockfd);
