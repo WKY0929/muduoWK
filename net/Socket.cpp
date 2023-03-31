@@ -46,6 +46,30 @@ int Socket::SetNonBlock(int fd)
     return old_option;
 
 }
+ void Socket::sockchat(int fd)
+    {
+        pid_t pid=fork();
+        if(0==pid)
+        {
+            while(1)
+            {
+        
+                char buf1[1024]="";
+                // write(fd,"hello",5);
+                read(fd,buf1,sizeof(buf1));
+                printf("client:%s",buf1);
+            }
+        }else
+        {
+            while(1)
+            {
+                char buf2[1024]="";
+                int n=read(STDIN_FILENO,buf2,sizeof(buf2));
+                write(fd,buf2,n);
+            }
+        }
+
+    }
 
 
 
