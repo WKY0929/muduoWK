@@ -5,10 +5,12 @@
 #include<map>
 //#include<atomic>
 #include<memory>
-class TcpServer
+#include "Epoller.h"
+#include "Socket.h" 
+class Tcpserver
 {
 public:
-    TcpServer();
+    Tcpserver(int port);
     void start();
 
 private:
@@ -16,10 +18,11 @@ private:
 private:
     //EventLoop* pMainLoop; //TcpServer所在主线程的EventLoop
     //InetAddress listenAddress_;//Server监听地址
-    const std::string name_; //
+    Socket ServerSocket_;
+    // const std::string name_; //
     //AtomicInt32 started_;  //
-    const int numEventThreads_;//
-
+    // const int numEventThreads_;//
+    
     //std::vector<std:::uniqe_ptr<ServerThread>>serverThreadVect_;
     //std::vector<EventLoop*>ServerLoopVect_;
     //std::unique_ptr<ListenSocket>listenSocket_;

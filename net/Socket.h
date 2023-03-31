@@ -33,11 +33,11 @@ public:
         ret=bind(sockfd_,(struct sockaddr*)&addr,sizeof(addr));
         // ret=listen(sockfd_,5);
         ret=listen(sockfd_,5);
-        struct sockaddr_in client;
-        socklen_t len=sizeof(client);
-        int cfd=accept(sockfd_,(struct sockaddr*)&client,&len);
+        // struct sockaddr_in client;
+        // socklen_t len=sizeof(client);
+        // int cfd=accept(sockfd_,(struct sockaddr*)&client,&len);
 
-        ret=SetNonBlock(sockfd_);
+        // ret=SetNonBlock(sockfd_);
     }
     const int getFd()
     {
