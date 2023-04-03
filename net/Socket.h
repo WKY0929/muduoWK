@@ -43,20 +43,20 @@ public:
     {
         return sockfd_;
     }
-    // void start();
-    // {
+    void start()
+    {
         
-    //     // int ret=listen(sockfd_,5);
-    //     // struct sockaddr_in client;
-    //     // socklen_t len=sizeof(client);
-    //     // int cfd=accept(sockfd_,(struct sockaddr*)&client,&len);
-    //     // printf("new client is coming\n");
-    //     // char ip[16]="";
-    //     // inet_ntop(AF_INET,&client.sin_addr.s_addr,ip,16);
-    //     // printf("ip address:%s,ip port:%d\n",ip,ntohs(client.sin_port));
-    //     // write(cfd,"welcome connect to our server",30);
-    //     // sockchat(cfd);
-    // }
+        // int ret=listen(sockfd_,5);
+        struct sockaddr_in client;
+        socklen_t len=sizeof(client);
+        int cfd=accept(sockfd_,(struct sockaddr*)&client,&len);
+        printf("new client is coming\n");
+        char ip[16]="";
+        inet_ntop(AF_INET,&client.sin_addr.s_addr,ip,16);
+        printf("ip address:%s,ip port:%d\n",ip,ntohs(client.sin_port));
+        write(cfd,"welcome connect to our server",30);
+        sockchat(cfd);
+    }
     int SetNonBlock(int fd);
     ~Socket()
     {

@@ -19,6 +19,7 @@ private:
     //EventLoop* pMainLoop; //TcpServer所在主线程的EventLoop
     //InetAddress listenAddress_;//Server监听地址
     Socket ServerSocket_;
+    Epoller ServerEpoll_;
     // const std::string name_; //
     //AtomicInt32 started_;  //
     // const int numEventThreads_;//
