@@ -1,6 +1,6 @@
 #include "Epoller.h"
 
-Epoller::Epoller(int maxEvent):epollerfd_(epoll_create(512)),_events(MaxEvents){
+Epoller::Epoller():epollerfd_(epoll_create(512)),_events(MaxEvents){
 
 }
 

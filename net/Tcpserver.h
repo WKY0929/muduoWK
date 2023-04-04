@@ -5,6 +5,7 @@
 #include<map>
 //#include<atomic>
 #include<memory>
+#include<string.h>
 #include "Epoller.h"
 #include "Socket.h" 
 class Tcpserver
@@ -15,6 +16,11 @@ public:
 
 private:
     void startThreadPool();
+    void closeConn_();
+    void handleRead_(int fd);
+    void handleWrite();
+    void lt(int eventCnt);
+    void et(int eventCnt);
 private:
     //EventLoop* pMainLoop; //TcpServer所在主线程的EventLoop
     //InetAddress listenAddress_;//Server监听地址

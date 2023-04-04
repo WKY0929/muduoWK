@@ -28,6 +28,10 @@ int main()
             char buf2[1024]="";
             int n=read(sockfd,buf2,sizeof(buf2));
             printf("server:%s\n",buf2);
+            if(n<-1)
+            {
+                break;
+            }
         }
     }
     
