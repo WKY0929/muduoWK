@@ -15,8 +15,10 @@ void Tcpserver::closeConn_()
 {
     printf("something else happened\n");
 }
-void Tcpserver::handleRead_(int fd)
+void Tcpserver::handleRead_(void* arg)
 {
+    int* temp=(int*)arg;
+    int fd=*temp;
     while(1)
     {
         printf("event trigger once\n");
@@ -94,27 +96,28 @@ void Tcpserver::et(int eventCnt)
             printf("new connect ip:%s,port %d \n",ip,ntohs(client.sin_port));
         }else if(events & EPOLLIN)
         {
-            printf("event trigger once\n");
-            while(1)
-            {
-                memset(buf,'\0',10);
-                int ret=recv(fd,buf,10-1,0);
-                if(ret<0)
-                {
-                    if((errno==EAGAIN)||(errno==EWOULDBLOCK))
-                    {
-                        printf("read later\n");
-                        break;
-                    }
-                    close(fd);
-                    break;
-                }else if(ret==0)
-                {
-                    close(fd);
-                }else{
-                    printf("%s",buf);
-                }
-            }
+            // printf("event trigger once\n");
+            // while(1)
+            // {
+            //     memset(buf,'\0',10);
+            //     int ret=recv(fd,buf,10-1,0);
+            //     if(ret<0)
+            //     {
+            //         if((errno==EAGAIN)||(errno==EWOULDBLOCK))
+            //         {
+            //             printf("read later\n");
+            //             break;
+            //         }
+            //         close(fd);
+            //         break;
+            //     }else if(ret==0)
+            //     {
+            //         close(fd);
+            //     }else{
+            //         printf("%s",buf);
+            //     }
+            // }
+            int ret=pthread_create(&thread1,NULL,handleRead_,(void*)fd)
         }
     }
 }
@@ -129,9 +132,9 @@ void Tcpserver::start()
             printf("epoll failure\n");
             break;
         }
-        lt(eventCnt);
+        // lt(eventCnt);
 
-        // et(eventCnt);
+        et(eventCnt);
         // for(int i=0;i<eventCnt;i++)
         // {
         //     int fd=ServerEpoll_.geteventFd(i);

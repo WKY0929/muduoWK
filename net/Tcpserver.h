@@ -5,6 +5,7 @@
 #include<map>
 //#include<atomic>
 #include<memory>
+#include<pthread.h>
 #include<string.h>
 #include "Epoller.h"
 #include "Socket.h" 
@@ -17,7 +18,7 @@ public:
 private:
     void startThreadPool();
     void closeConn_();
-    void handleRead_(int fd);
+    void handleRead_(void* arg);
     void handleWrite();
     void lt(int eventCnt);
     void et(int eventCnt);
@@ -26,6 +27,7 @@ private:
     //InetAddress listenAddress_;//Server监听地址
     Socket ServerSocket_;
     Epoller ServerEpoll_;
+    pthread_t thread1;
     // const std::string name_; //
     //AtomicInt32 started_;  //
     // const int numEventThreads_;//
