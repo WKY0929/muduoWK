@@ -3,23 +3,26 @@
 #include<string>
 #include<vector>
 #include<map>
+#include<algorithm>
 //#include<atomic>
 #include<memory>
 #include<pthread.h>
 #include<string.h>
+#include<functional>
 #include "Epoller.h"
 #include "Socket.h" 
+#include "ThreadPool.h"
 class Tcpserver
 {
 public:
-    Tcpserver(int port);
+    Tcpserver(int port,size_t threadNum=2);
     void start();
 
 private:
-    void startThreadPool();
+    // void startThreadPool();
     void closeConn_();
-    void handleRead_(void* arg);
-    void handleWrite();
+    void handleRead_(int fd);
+    void handleWrite_(int fd);
     void lt(int eventCnt);
     void et(int eventCnt);
 private:
@@ -27,7 +30,8 @@ private:
     //InetAddress listenAddress_;//Server监听地址
     Socket ServerSocket_;
     Epoller ServerEpoll_;
-    pthread_t thread1;
+    // pthread_t thread1;
+    std::unique_ptr<ThreadPool> threadpool_;
     // const std::string name_; //
     //AtomicInt32 started_;  //
     // const int numEventThreads_;//

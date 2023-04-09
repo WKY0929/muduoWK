@@ -2,7 +2,7 @@
 
 
 //Tcpserver::Tcpserver
-Tcpserver::Tcpserver(int port):ServerSocket_(port)
+Tcpserver::Tcpserver(int port,size_t threadNum):ServerSocket_(port),threadpool_(new ThreadPool(threadNum))
 {
 
     int Serverfd_=ServerSocket_.getFd();
@@ -15,10 +15,10 @@ void Tcpserver::closeConn_()
 {
     printf("something else happened\n");
 }
-void Tcpserver::handleRead_(void* arg)
+void Tcpserver::handleRead_(int fd)
 {
-    int* temp=(int*)arg;
-    int fd=*temp;
+    // int* temp=(int*)arg;
+    // int fd=*temp;
     while(1)
     {
         printf("event trigger once\n");
@@ -36,12 +36,19 @@ void Tcpserver::handleRead_(void* arg)
         }else if(ret==0)
         {
             close(fd);
+            // ServerEpoll_.delFd(fd);
         }else
         {
             printf("%s",buf);
-            //break;
+            break;
         }
     }
+}
+void Tcpserver::handleWrite_(int fd)
+{
+    char buf[10]="";
+    int n=read(STDIN_FILENO,buf,sizeof(buf));
+    write(fd,buf,n);
 }
 void Tcpserver::lt(int eventCnt)
 {
@@ -117,7 +124,11 @@ void Tcpserver::et(int eventCnt)
             //         printf("%s",buf);
             //     }
             // }
-            int ret=pthread_create(&thread1,NULL,handleRead_,(void*)fd)
+            // int ret=pthread_create(&thread1,NULL,handleRead_,(void*)fd)
+            threadpool_->submit(std::bind(&Tcpserver::handleRead_,this,fd));
+        }else if(events & EPOLLOUT)
+        {
+            threadpool_->submit(std::bind(&Tcpserver::handleWrite_,this,fd));
         }
     }
 }

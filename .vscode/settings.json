@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "memory": "cpp"
+        "memory": "cpp",
+        "functional": "cpp",
+        "condition_variable": "cpp"
     }
 }
