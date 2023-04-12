@@ -6,12 +6,14 @@
 #include<algorithm>
 //#include<atomic>
 #include<memory>
+#include<unordered_map>
 #include<pthread.h>
 #include<string.h>
 #include<functional>
 #include "Epoller.h"
 #include "Socket.h" 
 #include "ThreadPool.h"
+#include "http/HTTPconnection.h"
 class Tcpserver
 {
 public:
@@ -20,7 +22,7 @@ public:
 
 private:
     // void startThreadPool();
-    void closeConn_();
+    void closeConn_(HTTPconnection* client);
     void handleRead_(int fd);
     void handleWrite_(int fd);
     void lt(int eventCnt);
@@ -32,6 +34,7 @@ private:
     Epoller ServerEpoll_;
     // pthread_t thread1;
     std::unique_ptr<ThreadPool> threadpool_;
+    std::unordered_map<int,HTTPconnection>users_;
     // const std::string name_; //
     //AtomicInt32 started_;  //
     // const int numEventThreads_;//

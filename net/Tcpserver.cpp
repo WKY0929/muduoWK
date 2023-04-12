@@ -101,30 +101,12 @@ void Tcpserver::et(int eventCnt)
             char ip[16]="";
             inet_ntop(AF_INET,&client,ip,16);
             printf("new connect ip:%s,port %d \n",ip,ntohs(client.sin_port));
-        }else if(events & EPOLLIN)
+        }else if(events &(EPOLLRDHUP)|EPOLLHUP|EPOLLERR)
         {
-            // printf("event trigger once\n");
-            // while(1)
-            // {
-            //     memset(buf,'\0',10);
-            //     int ret=recv(fd,buf,10-1,0);
-            //     if(ret<0)
-            //     {
-            //         if((errno==EAGAIN)||(errno==EWOULDBLOCK))
-            //         {
-            //             printf("read later\n");
-            //             break;
-            //         }
-            //         close(fd);
-            //         break;
-            //     }else if(ret==0)
-            //     {
-            //         close(fd);
-            //     }else{
-            //         printf("%s",buf);
-            //     }
-            // }
-            // int ret=pthread_create(&thread1,NULL,handleRead_,(void*)fd)
+            closeConn_(&)
+        }
+        else if(events & EPOLLIN)
+        {
             threadpool_->submit(std::bind(&Tcpserver::handleRead_,this,fd));
         }else if(events & EPOLLOUT)
         {
