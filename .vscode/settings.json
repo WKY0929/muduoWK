@@ -2,6 +2,11 @@
     "files.associations": {
         "memory": "cpp",
         "functional": "cpp",
-        "condition_variable": "cpp"
+        "condition_variable": "cpp",
+        "*.tcc": "cpp",
+        "istream": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp"
     }
 }
