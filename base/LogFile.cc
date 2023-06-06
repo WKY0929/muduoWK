@@ -2,7 +2,7 @@
 #include <string.h>
 #include <sys/time.h>
 
-#include "logFile.h"
+#include "LogFile.h"
 
 namespace muduoWK{
 

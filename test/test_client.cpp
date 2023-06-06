@@ -9,7 +9,7 @@ int main()
     sockfd=socket(AF_INET,SOCK_STREAM,0);
     struct sockaddr_in addr;
     addr.sin_family=AF_INET;
-    addr.sin_port=htons(1316);
+    addr.sin_port=htons(8000);
     inet_pton(AF_INET,"127.0.0.1",&addr.sin_addr.s_addr);
     connect(sockfd,(struct sockaddr*)&addr,sizeof(addr));
     pid_t pid=fork();

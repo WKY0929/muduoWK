@@ -15,7 +15,11 @@ extern __thread int t_tidStringLength;
 extern __thread const char* t_threadName;
 
 pid_t gettid();
+
+//缓存该线程的线程id
 void cacheTid();
+
+//返回该线程的线程id
 inline int tid() {
     if (__builtin_expect(t_cachedTid == 0, 0)) cacheTid();
     return t_cachedTid;//直接返回缓存的id
